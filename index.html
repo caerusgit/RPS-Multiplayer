@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock Paper Scissors</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Own css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+
+
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+    <!-- Container Div -->
+    <div class="container">
+
+
+            <div id="snackbar"></div>
+
+
+
+
+        <div class="jumbotron text-center">
+            <h1>Rock Paper Scissors</h1>
+            <br>
+            <h4 id="player-1-greeting">Hi <span id="player-1"></span>!</h4>
+            <h4 id="player-2-greeting">Hi <span id="player-2"></span>!</h4>
+            <form id="enter-name" class="form-inline justify-content-center" onsubmit="event.preventDefault();">
+                <label class="sr-only" for="yourEmail">Email</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <input type="text" class="form-control" id="player-name" placeholder="Enter your Name">
+                </div>
+                <button type="button" id="name-box" class="btn btn-primary my-2 my-sm-0">Play</button>
+            </form>
+            <p id="player-1-stats"></p>
+            <p id="player-2-stats"></p>
+        </div>
+
+
+
+
+
+
+        <!-- a Bootstrap row with columns -->
+        <div class="row" id="mainContent">
+
+
+            <div class="col-12" id="player-1-div">
+                <div id="player-1-buttons">
+                    <button class="btn btn-primary" id="rock-1" value="rock"><img src="assets/images/rock.jpg"
+                            width="100"></button>
+                    <!-- <img id="rock-1" value="rock" src="assets/images/rock.jpg" width="100"> -->
+                    <button class="btn btn-primary" id="paper-1" value="paper"><img src="assets/images/paper.jpg"
+                            width="100"></button>
+                    <button class="btn btn-primary" id="scissors-1" value="scissors"><img
+                            src="assets/images/scissors.jpg" width="100"></button>
+                </div>
+            </div>
+
+
+            <div class="col-12" id="waiting-div">
+                <div class="spinner-border text-danger" style="width: 5rem; height: 5rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <br>
+                <br>
+                Waiting for <span id="opponent"></span>
+                <br>
+                <br>
+            </div>
+
+
+
+
+
+            <div class="col-12" id="player-2-div">
+                <div id="player-2-buttons">
+                    <button class="btn btn-warning" id="rock-2" value="rock"><img src="assets/images/rock.jpg"
+                            width="100"></button>
+                    <button class="btn btn-warning" id="paper-2" value="paper"><img src="assets/images/paper.jpg"
+                            width="100"></button>
+                    <button class="btn btn-warning" id="scissors-2" value="scissors"><img
+                            src="assets/images/scissors.jpg" width="100"></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12" id="chat-box"></div>
+        </div>
+
+        <br>
+
+
+        <div class="row">
+            <div class="col-12" id="chat-form">
+                <form onsubmit="event.preventDefault();">
+                    <input id="player-chat" type="text" name="chat" value="">
+                    <input id="chat-send" type="button" class="btn btn-secondary" value="Send">
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div clas="loader-txt">
+                            <p>Hi <span id="user"></span>!
+                                <br>
+                                <div class="spinner-border text-danger" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <br>
+                                <br>
+                                <small>Waiting for opponent</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- https://stackoverflow.com/questions/52458430/boostrap-4-snackbar-toast -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script src="assets/javascript/app.js"></script>
+</body>
+
+</html>
